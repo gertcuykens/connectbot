@@ -75,7 +75,7 @@ public class TerminalBridge implements VDUDisplay {
 
 	/* package */ AbsTransport transport;
 
-	final Paint defaultPaint;
+	public final Paint defaultPaint;
 
 	private Relay relay;
 

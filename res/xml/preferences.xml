@@ -63,7 +63,15 @@
 			android:numeric="integer"
 			/>
 
-	</PreferenceCategory>
+        <EditTextPreference
+            android:key="fontpath"
+            android:title="Custom font"
+            android:summary="Path to custom font example /sdcard/Download/PowerlineSymbols.otf"
+            android:defaultValue=""
+            android:singleLine="true"
+            />
+
+    </PreferenceCategory>
 
 	<PreferenceCategory
 		android:title="@string/pref_ui_category">

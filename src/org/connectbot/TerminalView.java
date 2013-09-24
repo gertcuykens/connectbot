@@ -21,6 +21,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.app.AlertDialog;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import org.connectbot.bean.SelectionArea;
 import org.connectbot.service.FontSizeChangedListener;
 import org.connectbot.service.TerminalBridge;
@@ -38,6 +41,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PixelXorXfermode;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.view.KeyEvent;
@@ -102,6 +106,21 @@ public class TerminalView extends View implements FontSizeChangedListener {
 		setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 		setFocusable(true);
 		setFocusableInTouchMode(true);
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        String path = sharedPref.getString("fontpath", "");
+        if (!path.equals("")) {
+            try {
+                //Typeface typeFace=Typeface.createFromAsset(context.getAssets(), "fonts/PowerlineSymbols.otf");
+                Typeface typeFace = Typeface.createFromFile(path);
+                bridge.defaultPaint.setTypeface(typeFace);
+            } catch (RuntimeException e) {
+                new AlertDialog.Builder(context)
+                        .setTitle("Exception")
+                        .setMessage("Custom font error, reverting back to default")
+                        .show();
+            }
+        }
 
 		cursorPaint = new Paint();
 		cursorPaint.setColor(bridge.color[bridge.defaultFg]);
